@@ -1,0 +1,14 @@
+//
+//  TestContent.swift
+//  NewsProgramatically
+//
+//  Created by Muhammed Faruk Söğüt on 27.12.2021.
+//
+
+import Foundation
+
+// Newsapi'den gelen veri çok kısa olduğu için scroolView test edilemiyordu. Hazır Uzun bir haber ekleyerek scrollView testi yaptım.
+
+enum ExampleText {
+    static let testContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam elit tortor, facilisis sed sapien sed, ultrices pellentesque erat. Donec a efficitur leo. Donec tempus nibh sed nulla sagittis, nec ornare augue placerat. Vestibulum eu arcu vitae elit dignissim varius. Vestibulum rutrum metus quis iaculis aliquam. Donec tincidunt metus eu dignissim luctus. Suspendisse blandit auctor velit eu vestibulum. Pellentesque posuere gravida quam, eu malesuada ligula. Duis sagittis ipsum arcu. Quisque suscipit nibh sed leo gravida, non rhoncus sapien ornare. Ut ut magna eget libero consectetur congue eu id neque. Suspendisse potenti. Morbi at venenatis nunc, quis posuere ligula. Ut sed metus mauris. Nam tincidunt sagittis commodo. Nam ligula neque, condimentum ac pellentesque nec, blandit eget tortor.Integer vulputate risus nec dolor viverra, eu imperdiet sem commodo. Nam nisl tortor, gravida quis pellentesque ut, lobortis a eros. Pellentesque bibendum lacus sed enim sagittis, in aliquam neque ultrices. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Phasellus sodales orci sit amet metus rhoncus, quis auctor quam sodales. Aenean massa ligula, rutrum sed venenatis et, sodales lobortis odio. Curabitur fringilla dui tortor, et pretium eros fermentum quis.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam elit tortor, facilisis sed sapien sed, ultrices pellentesque erat. Donec a efficitur leo. Donec tempus nibh sed nulla sagittis, nec ornare augue placerat. Vestibulum eu arcu vitae elit dignissim varius. Vestibulum rutrum metus quis iaculis aliquam. Donec tincidunt metus eu dignissim luctus. Suspendisse blandit auctor velit eu vestibulum. Pellentesque posuere gravida quam, eu malesuada ligula. Duis sagittis ipsum arcu. Quisque suscipit nibh sed leo gravida, non rhoncus sapien ornare. Ut ut magna eget libero consectetur congue eu id neque. Suspendisse potenti. Morbi at venenatis nunc, quis posuere ligula. Ut sed metus mauris. Nam tincidunt sagittis commodo. Nam ligula neque, condimentum ac pellentesque nec, blandit eget tortor.Integer vulputate risus nec dolor viverra, eu imperdiet sem commodo. Nam nisl tortor, gravida quis pellentesque ut, lobortis a eros. Pellentesque bibendum lacus sed enim sagittis, in aliquam neque ultrices. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Phasellus sodales orci sit amet metus rhoncus, quis auctor quam sodales. Aenean massa ligula, rutrum sed venenatis et, sodales lobortis odio. Curabitur fringilla dui tortor, et pretium eros fermentum quis."
+}
