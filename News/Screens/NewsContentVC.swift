@@ -40,12 +40,13 @@ class NewsContentVC: UIViewController {
     
     
     @objc func goDetailWithSafari(){
-      
+
         guard let url = URL(string: news.url) else {return}
-        
+
         let safari = SFSafariViewController(url: url)
         safari.preferredControlTintColor = .red
         present(safari, animated: true)
+   
     }
     
     

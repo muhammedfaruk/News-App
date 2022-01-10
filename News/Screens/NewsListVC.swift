@@ -150,7 +150,7 @@ class NewsListVC: UIViewController{
                 self.newsArray = news.articles
                 
              case.failure(let error):
-                print(error)
+                print(error.rawValue)
             }
             
             DispatchQueue.main.async {

@@ -27,7 +27,7 @@ class NewsTableViewCell: UITableViewCell {
     
     func set(article: Article){
         self.newsTitle.text = article.title
-        newsImage.downloadImage(imageURL: article.urlToImage ?? "")
+        newsImage.setImage(imageURL: article.urlToImage ?? "")
     }
     
     

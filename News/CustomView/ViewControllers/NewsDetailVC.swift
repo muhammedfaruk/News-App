@@ -47,7 +47,7 @@ class NewsDetailVC: UIViewController {
         super.init(nibName: nil, bundle: nil)
         newsTitleLabel.text = news.title
         contentLabel.text   = ExampleText.testContent
-        titleImage.downloadImage(imageURL: news.urlToImage ?? "")
+        titleImage.setImage(imageURL: news.urlToImage ?? "")
     }
     
    

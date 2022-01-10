@@ -29,7 +29,7 @@ class SwipeCollectionViewCell: UICollectionViewCell {
     }
     
     func setImage(imageURL : String){
-        imageView.downloadImage(imageURL: imageURL)
+        imageView.setImage(imageURL: imageURL)
     }
     
 }

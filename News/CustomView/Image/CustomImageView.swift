@@ -39,7 +39,7 @@ class CustomImageView: UIImageView {
     }
     
     
-    func downloadImage(imageURL: String){
+    func setImage(imageURL: String){
         
         let cacheKey = NSString(string: imageURL)
         

@@ -13,7 +13,7 @@ class UITabBarVC: UITabBarController {
         super.viewDidLoad()
 
         UITabBar.appearance().tintColor = .systemRed
-        viewControllers                 = [createNewsNC(), createVideosNC()]
+        viewControllers                 = [createNewsNC(),createSearcNewsNC(),createVideosNC()]
     }
 
     func createNewsNC() -> UINavigationController {
@@ -25,12 +25,23 @@ class UITabBarVC: UITabBarController {
     }
     
     
+    func createSearcNewsNC() -> UINavigationController {
+        let searchNewsVC    = SearchNewsVC()
+        searchNewsVC.title  = "Haber Ara"
+        searchNewsVC.tabBarItem = UITabBarItem(title: "Haber Ara", image: UIImage(systemName: "magnifyingglass.circle"), tag: 1)
+        
+        return UINavigationController(rootViewController: searchNewsVC)
+    }
+    
+    
     func createVideosNC() -> UINavigationController {
         let videoVC = WriterVC()
         videoVC.title       = "Haber Yazarları"
-        videoVC.tabBarItem  = UITabBarItem(title: "Yazarlar", image: UIImage(systemName: "person.3"), tag: 1)
+        videoVC.tabBarItem  = UITabBarItem(title: "Yazarlar", image: UIImage(systemName: "person.3"), tag: 2)
         
         return UINavigationController(rootViewController: videoVC)
     }
+    
+    
 
 }
