@@ -100,8 +100,11 @@ extension SearchNewsVC: UISearchBarDelegate{
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         
-        let searchText = searchBar.text!.lowercased().trimmingCharacters(in:.whitespacesAndNewlines).addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
-        
-        getNews(searchText: searchText!)
+        if !searchBar.text!.isEmpty {
+            let searchText = searchBar.text!.lowercased().trimmingCharacters(in:.whitespacesAndNewlines).addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
+            
+            getNews(searchText: searchText!)
+        }
+
     }
 }

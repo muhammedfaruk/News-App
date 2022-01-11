@@ -24,4 +24,16 @@ enum UIHelper {
         return flowLayout
     }
     
+    static func swipingFlowlayout(view: UIView) -> UICollectionViewFlowLayout {
+        
+        let width = view.bounds.width
+
+        let layout                  = UICollectionViewFlowLayout()
+        layout.scrollDirection      = .horizontal
+        layout.itemSize             = CGSize(width: width, height: width)
+        layout.minimumLineSpacing   = 0
+        
+        return layout
+    }
+    
 }

@@ -25,7 +25,7 @@ class SwipeCollectionViewCell: UICollectionViewCell {
     private func configure(){
         addSubview(imageView)
         imageView.translatesAutoresizingMaskIntoConstraints = false        
-        imageView.pinToEdges(subView: self)
+        imageView.pinToEdges(subView: self)        
     }
     
     func setImage(imageURL : String){

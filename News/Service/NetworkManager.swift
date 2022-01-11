@@ -4,8 +4,6 @@
 //
 //  Created by Muhammed Faruk Söğüt on 19.12.2021.
 //
-
-import Foundation
 import UIKit
 
 class NetworkManager {
@@ -56,6 +54,8 @@ class NetworkManager {
     
     func searchNews(searchText: String, completion : @escaping (Result<News, errorMessages>)  -> Void) {
        
+        guard !searchText.isEmpty else {return}
+        
        let searchURL  = "https://newsapi.org/v2/everything?qInTitle=\(searchText)&apiKey=ccc880d59b46414e93d693b98303a674"
                           
        guard let url = URL(string: searchURL) else {
@@ -91,19 +91,8 @@ class NetworkManager {
 
        }
        task.resume()
-   }
-
-    
+   }   
 }
-
-
-enum errorMessages : String, Error{
-    case url        = "URL error"
-    case URLsession = "URL session task error"
-    case response   = "Response error"
-    case decode     = "Decoding error"
-}
-
 
 
 

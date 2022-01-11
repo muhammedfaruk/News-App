@@ -9,91 +9,78 @@ import UIKit
 
 class NewsListVC: UIViewController{
     
-    let mainContainerView       = UIView()
-    let mainScroolView          = UIScrollView()
-    let swipeContainerView      = UIView()
+    let collectionCell          = "collectionCell"
+    let tableCell               = "tableCell"
+    
+    let containerView           = UIView()
+    let scrollView              = UIScrollView()
     let pageControl             = UIPageControl()
     let tableView               = UITableView()
+    
+    var swipeCollectionView     : UICollectionView!
 
     var newsArray: [Article]    = []
-    let changeSwipePageName     = Notification.Name("change")
+    var swipingImageArray:[String] = []
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-      
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         navigationController?.navigationBar.prefersLargeTitles = true
         
-        getNews()
-        createObserver()
-        configureSwipeView()
+       
+        configureCollectionView()
         configurePageControl()
         configureTableView()
         configureScroolView()
         configureContainerView()
+        getNews()
+                
     }
             
     
     func configureScroolView(){
-        view.addSubview(mainScroolView)
-        mainScroolView.delegate = self
-        mainScroolView.pinToEdges(subView: view)
+        view.addSubview(scrollView)
+        scrollView.delegate = self
+        scrollView.pinToEdges(subView: view)
     }
     
     
     func configureContainerView(){
-        mainScroolView.addSubview(mainContainerView)
-        mainContainerView.pinToEdges(subView: mainScroolView)
+        scrollView.addSubview(containerView)
+        containerView.pinToEdges(subView: scrollView)
         
         let tableViewRowHeight  = Double(tableView.rowHeight)
         let numberOfRows        = 20.0
         
         NSLayoutConstraint.activate([
-            mainContainerView.heightAnchor.constraint(equalToConstant: CGFloat(numberOfRows * tableViewRowHeight)),
-            mainContainerView.widthAnchor.constraint(equalTo: mainScroolView.widthAnchor)
+            containerView.heightAnchor.constraint(equalToConstant: CGFloat(numberOfRows * tableViewRowHeight)),
+            containerView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
         ])
     }
-    
-    
-    func createObserver(){
-    NotificationCenter.default.addObserver(self, selector: #selector(changeCurrentPage), name: changeSwipePageName, object: nil)
-    }
-    
+
      
-    @objc func changeCurrentPage(notification: NSNotification){
-        guard let currentPage = notification.userInfo?["currentPageValue"] as? Int else {return}
-        pageControl.currentPage = currentPage
-    }
-    
-     
-    func configureSwipeView(){
+    func configureCollectionView(){
+        swipeCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UIHelper.swipingFlowlayout(view: view))
+        containerView.addSubview(swipeCollectionView)
+       
+        swipeCollectionView.isPagingEnabled                 = true
+        swipeCollectionView.showsHorizontalScrollIndicator  = false
+        swipeCollectionView.dataSource                      = self
+        swipeCollectionView.delegate = self
         
-        mainContainerView.addSubview(swipeContainerView)
-        swipeContainerView.translatesAutoresizingMaskIntoConstraints = false
+        
+        swipeCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        swipeCollectionView.register(SwipeCollectionViewCell.self, forCellWithReuseIdentifier: collectionCell)
         
         NSLayoutConstraint.activate([
-            swipeContainerView.topAnchor.constraint(equalTo: mainContainerView.topAnchor),
-            swipeContainerView.leadingAnchor.constraint(equalTo: mainContainerView.leadingAnchor, constant: 8),
-            swipeContainerView.trailingAnchor.constraint(equalTo: mainContainerView.trailingAnchor, constant: -8),
-            swipeContainerView.widthAnchor.constraint(equalTo: swipeContainerView.heightAnchor, multiplier: 1.8)
+            swipeCollectionView.topAnchor.constraint(equalTo: containerView.topAnchor),
+            swipeCollectionView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            swipeCollectionView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            swipeCollectionView.widthAnchor.constraint(equalTo: swipeCollectionView.heightAnchor, multiplier: 2)
         ])
-        
-        DispatchQueue.main.async {
-            let swipingCV =  SwipingCollectionView(collectionViewLayout: UICollectionViewLayout())
-            self.add(childVC: swipingCV , containerView: self.swipeContainerView)
-        }
            
-    }
-    
-    
-    func add(childVC : UICollectionViewController, containerView: UIView){
-           addChild(childVC)
-           containerView.addSubview(childVC.view)
-           childVC.view.frame = containerView.bounds
-           childVC.didMove(toParent: self)
     }
     
     
@@ -108,12 +95,12 @@ class NewsListVC: UIViewController{
         
         pageControl.translatesAutoresizingMaskIntoConstraints = false
            
-        mainContainerView.addSubview(pageControl)
+        containerView.addSubview(pageControl)
 
         NSLayoutConstraint.activate([
-            pageControl.topAnchor.constraint(equalTo: swipeContainerView.bottomAnchor, constant: 5),
-            pageControl.leadingAnchor.constraint(equalTo: mainContainerView.leadingAnchor, constant: 20),
-            pageControl.trailingAnchor.constraint(equalTo: mainContainerView.trailingAnchor, constant: -20),
+            pageControl.topAnchor.constraint(equalTo: swipeCollectionView.bottomAnchor, constant: 5),
+            pageControl.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            pageControl.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
             pageControl.heightAnchor.constraint(equalToConstant: 20)
         ])
     }
@@ -121,7 +108,7 @@ class NewsListVC: UIViewController{
               
     func configureTableView(){
        
-        mainContainerView.addSubview(tableView)
+        containerView.addSubview(tableView)
         
         tableView.rowHeight = 120
         tableView.isScrollEnabled = false
@@ -130,51 +117,54 @@ class NewsListVC: UIViewController{
         tableView.delegate      = self
         tableView.dataSource    = self
         
-        tableView.register(NewsTableViewCell.self, forCellReuseIdentifier: "NewsCell")
+        tableView.register(NewsTableViewCell.self, forCellReuseIdentifier: tableCell)
         
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: pageControl.bottomAnchor,constant: 12),
-            tableView.leadingAnchor.constraint(equalTo: mainContainerView.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: mainContainerView.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: mainContainerView.bottomAnchor)
+            tableView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
         ])
     }
     
- 
+   
     func getNews(){
+        showLoadingView()
         NetworkManager.shared.downloadNewsData {[weak self] result in
             guard let self = self else {return}
-                        
+            self.dissmisLoadingView()
             switch result {
-             case .success(let news):
+            case .success(let news):
                 self.newsArray = news.articles
                 
-             case.failure(let error):
+                for i in 0...4{
+                    self.swipingImageArray.append(self.newsArray[i].urlToImage!)
+                }
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                    self.swipeCollectionView.reloadData()
+                }
+                
+            case.failure(let error):
                 print(error.rawValue)
             }
-            
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-         }
-       }
-     }
+        }
+    }
+}
 
 
-
-extension NewsListVC: UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate{
+extension NewsListVC: UITableViewDelegate, UITableViewDataSource{
    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return newsArray.count
+        return self.newsArray.count
     }
     
    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell        = tableView.dequeueReusableCell(withIdentifier: "NewsCell") as! NewsTableViewCell
+        let cell        = tableView.dequeueReusableCell(withIdentifier: tableCell) as! NewsTableViewCell
         let newsArticle = newsArray[indexPath.row]
         cell.set(article: newsArticle)
-
         return cell
     }
     
@@ -185,11 +175,40 @@ extension NewsListVC: UITableViewDelegate, UITableViewDataSource, UIScrollViewDe
         let contentVC   = NewsContentVC(news: newsArticle)
         
         navigationController?.pushViewController(contentVC, animated: true)
-        
         tableView.deselectRow(at: indexPath, animated: true)
     }
         
 }
+
+extension NewsListVC: UICollectionViewDataSource, UICollectionViewDelegate{
+       
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.swipingImageArray.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: collectionCell, for: indexPath) as! SwipeCollectionViewCell
+        cell.setImage(imageURL: self.swipingImageArray[indexPath.item])
+        
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let newsContent = NewsContentVC(news: self.newsArray[indexPath.item])
+        navigationController?.pushViewController(newsContent, animated: true)
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let pageWidth:CGFloat = scrollView.frame.width
+        let x:CGFloat = scrollView.contentOffset.x
+        let currentPage = Int(x/pageWidth)
+        
+        pageControl.currentPage = currentPage
+    }
+    
+}
+
 
 
 
