@@ -23,3 +23,5 @@ This is a news app that use NewsAPI
 
 This app is still under development!
 
+NewsAPI Developer accounts are limited to 100 requests over a 24 hour period !
+
