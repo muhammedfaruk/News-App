@@ -83,7 +83,7 @@ class NewsListVC: UIViewController{
         
         DispatchQueue.main.async {
             let swipingCV =  SwipingCollectionView(collectionViewLayout: UICollectionViewLayout())
-            self.add(childVC: swipingCV, containerView: self.swipeContainerView)
+            self.add(childVC: swipingCV , containerView: self.swipeContainerView)
         }
            
     }

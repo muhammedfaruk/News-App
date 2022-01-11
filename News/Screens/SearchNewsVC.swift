@@ -14,14 +14,14 @@ class SearchNewsVC: UIViewController {
     var collectionView : UICollectionView!
     
     var newsArray : [Article] = []
-   
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
- 
+        
         configureCollectionView()
         configureSearchBar()
-        getNews(searchText: "car") // this is a first news for search screen
+        getNews(searchText: "")
     }
     
     
@@ -37,8 +37,9 @@ class SearchNewsVC: UIViewController {
         
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: UIHelper.createThreeColumnFlowLayout(view: self.view))
         view.addSubview(collectionView)
-
+        
         collectionView.dataSource      = self
+        collectionView.delegate        = self
         collectionView.backgroundColor = .clear
         
         collectionView.register(SearchCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
@@ -46,27 +47,32 @@ class SearchNewsVC: UIViewController {
     
     
     func getNews(searchText: String){
- 
+        
         NetworkManager.shared.searchNews(searchText: searchText) {[weak self] result in
             guard let self = self else {return}
             
             switch result {
+            
             case .success(let news):
+                
                 self.newsArray = news.articles
+                
+                if self.newsArray.isEmpty{
+                    self.presentAlertOnMainThread(title: "Hata", message: "Tekrar arama yapınız")
+                }
+                
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+                
             case .failure(let error):
                 print(error.rawValue)
+                self.presentAlertOnMainThread(title: "Hata", message: "Lütfen internet bağlantınızı kontrol ediniz")
             }
-            
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
-            }
+          }
         }
     }
-    
-    
 
-
-}
 
 extension SearchNewsVC: UICollectionViewDelegate, UICollectionViewDataSource{
     
@@ -74,14 +80,19 @@ extension SearchNewsVC: UICollectionViewDelegate, UICollectionViewDataSource{
         return self.newsArray.count
     }
     
-   
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! SearchCollectionViewCell
         cell.set(news: self.newsArray[indexPath.item])
         
         return cell
     }
-        
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let selectedNews    = self.newsArray[indexPath.item]
+        let NewsContentVC   = NewsContentVC(news: selectedNews)
+        navigationController?.pushViewController(NewsContentVC, animated: true)
+    }
 }
 
 

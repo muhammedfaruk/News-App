@@ -16,7 +16,7 @@ class SwipingCollectionView: UICollectionViewController, UICollectionViewDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        
         getNewsInfo()
         configureCollectionView()
         configureFlowLayout()
@@ -26,14 +26,14 @@ class SwipingCollectionView: UICollectionViewController, UICollectionViewDelegat
     private func configureCollectionView(){
         collectionView.isPagingEnabled = true
         collectionView.showsHorizontalScrollIndicator = false
-        self.collectionView!.register(SwipeCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView!.register(SwipeCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
     }
     
     
     private func configureFlowLayout(){
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        self.collectionView.collectionViewLayout = layout
+        collectionView.collectionViewLayout = layout
     }
     
     
@@ -51,38 +51,38 @@ class SwipingCollectionView: UICollectionViewController, UICollectionViewDelegat
                     self.imageArray.append(news.articles[i].urlToImage)
                 }
                 
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+                
             case .failure(let error):
                 print(error)
             }
             
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
-            }
         }
     }
-
+    
     override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-       
+        
         let x               = targetContentOffset.pointee.x
         let currentPageInt  = Int(x / view.frame.width)
         
         let currentPageInfo: [String: Int] = ["currentPageValue": currentPageInt]
- 
         NotificationCenter.default.post(name: NSNotification.Name("change"), object: nil, userInfo: currentPageInfo)
     }
-
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.imageArray.count
     }
-
+    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! SwipeCollectionViewCell
-     
+        
         let imageUrl = self.imageArray[indexPath.item]
         cell.setImage(imageURL: imageUrl ?? "")
         return cell
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
