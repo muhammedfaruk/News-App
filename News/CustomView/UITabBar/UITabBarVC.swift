@@ -17,8 +17,7 @@ class UITabBarVC: UITabBarController {
     }
 
     func createNewsNC() -> UINavigationController {
-        let newsListVC = NewsListVC()
-        newsListVC.title        = "Yeni Haberler"
+        let newsListVC = MainContainerVC()
         newsListVC.tabBarItem   = UITabBarItem(title: "Haberler", image: UIImage(systemName: "newspaper"), tag: 0)
         
         return UINavigationController(rootViewController: newsListVC)
@@ -26,7 +25,7 @@ class UITabBarVC: UITabBarController {
     
     
     func createSearcNewsNC() -> UINavigationController {
-        let searchNewsVC    = SearchNewsVC()
+        let searchNewsVC    = SearchNewsVC(searchText: "")
         searchNewsVC.title  = "Haber Ara"
         searchNewsVC.tabBarItem = UITabBarItem(title: "Haber Ara", image: UIImage(systemName: "magnifyingglass.circle"), tag: 1)
         

@@ -28,6 +28,8 @@ class CustomImageView: UIImageView {
     override init(image: UIImage?, highlightedImage: UIImage?) {
         super.init(image: image, highlightedImage: highlightedImage)
         self.image              = placeholder
+        clipsToBounds = true
+        contentMode = .scaleAspectFit
         self.translatesAutoresizingMaskIntoConstraints = false
     }
     
@@ -35,7 +37,7 @@ class CustomImageView: UIImageView {
         layer.cornerRadius = 10
         clipsToBounds      = true
         image              = placeholder
-        translatesAutoresizingMaskIntoConstraints = false
+        translatesAutoresizingMaskIntoConstraints = false        
     }
     
     
