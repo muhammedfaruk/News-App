@@ -151,7 +151,7 @@ class NewsListVC: UIViewController{
                 self.newsArray = news.articles
                 
                 for i in 0...4{
-                    self.swipingImageArray.append(self.newsArray[i].urlToImage!)
+                    self.swipingImageArray.append(self.newsArray[i].urlToImage ?? "")
                 }
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
