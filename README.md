@@ -13,11 +13,13 @@ This is a news app that use NewsAPI
 <hr>
 
 ### Screenshots
-<img src="https://user-images.githubusercontent.com/76944306/148680294-aa0b6755-46ee-4e4d-a422-74b210f2a701.png" data-canonical-src="" width="250" height="500" /> <img src="https://user-images.githubusercontent.com/76944306/148680378-d2e144b9-a3a3-4535-824d-bd87d5c840d6.png" data-canonical-src="" width="250" height="500" /> 
-<img src="https://user-images.githubusercontent.com/76944306/148807574-4c583edc-21fd-4754-9742-2bddc3202eb8.png" data-canonical-src="" width="250" height="500" />
-<img src="https://user-images.githubusercontent.com/76944306/149193681-57890bbc-fee2-4d0e-9d5d-adecd0ab3a62.png" data-canonical-src="" width="250" height="500" />
-<img src="https://user-images.githubusercontent.com/76944306/148680380-22b9ee2d-ec14-40a9-b256-511348fe310d.png" data-canonical-src="" width="250" height="500" /> 
-<img src="https://user-images.githubusercontent.com/76944306/148680382-665881d1-a7ef-4fe1-8057-5b7455bacd63.png" data-canonical-src="" width="250" height="500" /> 
+
+<img src="https://user-images.githubusercontent.com/76944306/149358091-2bee46a9-5b2c-469c-a444-9b531cf09605.png" data-canonical-src="" width="250" height="500" /><img src="https://user-images.githubusercontent.com/76944306/149193681-57890bbc-fee2-4d0e-9d5d-adecd0ab3a62.png" data-canonical-src="" width="250" height="500" /><img src="https://user-images.githubusercontent.com/76944306/148807574-4c583edc-21fd-4754-9742-2bddc3202eb8.png" data-canonical-src="" width="250" height="500" /><img src="https://user-images.githubusercontent.com/76944306/149358101-2a05fa69-6162-423b-935e-aa54c0308bd5.png" data-canonical-src="" width="250" height="500" /><img src="https://user-images.githubusercontent.com/76944306/149358112-4dcb8f48-a044-44da-afcb-d9d74cae3caa.png" data-canonical-src="" width="250" height="500" />
+
+
+
+
+
 <hr>
 
 ### Note
