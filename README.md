@@ -24,7 +24,5 @@ This is a news app that use NewsAPI
 
 ### Note
 
-This app is still under development!
-
-NewsAPI Developer accounts are limited to 100 requests over a 24 hour period !
+I did not use any third party libraries because I want to learn background process in swift. But for this project I could use KingFisher, Alamofire, SnapKit libraries.
 
